@@ -1,0 +1,43 @@
+-- 1.	Display the ids and names for all customers.
+SELECT cust_id, cust_name FROM customer;
+-- 2.	Display all the data in the sales representative table.
+SELECT * FROM rep;
+-- 3.	Display the names of all customers whose credit limits are $10,000 or more.
+SELECT cust_name FROM customer WHERE cust_limit>=10000;
+-- 4.	Display the invoice number for all orders placed by the customer whose id is 1619 on September 13, 2007.  Please note: A date in a condition should be in the form ’13-SEP-07’.
+select invoice_num from invoice where cust_id='1619' and invoice_date='13-SEP-07';
+-- 5.	Display the id and the name for all customers whose sales representative has an id of either 237 or 268.
+select cust_id, cust_name from customer where (rep_id='237') or (rep_id='268');
+-- 6.	Display the id and description for all products whose type is not AP.
+select prod_id, prod_desc from product where prod_type!='AP';
+-- 7.	Display the id, the description, and the number of items for each product that has between 12 and 30 items. Perform this query two different ways.
+select prod_id, prod_desc, prod_quantity from product where (prod_quantity>=12) and (prod_quantity<=30);
+select prod_id, prod_desc, prod_quantity from product where prod_quantity between 12 and 30;
+-- 8.	Display the id, the description, and the total value (product quantity * product price) of each product whose product type is HW.  Assign the column name TOTAL_VALUE to this calculation.
+select prod_id, prod_desc, prod_quantity * prod_price as TOTAL_VALUE from product where prod_type='HW';
+-- 9.	Display the id, the description, and the total value (product quantity * product price) of each product whose total value is greater than or equal to $4,000.  Assign the column name TOTAL_VALUE to the calculation.
+select prod_id, prod_desc, prod_quantity * prod_price as TOTAL_VALUE from product where (prod_quantity * prod_price)>=4000;
+-- 10.	Display the id and the description for each product whose type is either SG or AP using the IN operator.
+select prod_id, prod_desc from product where prod_type in ('SG', 'AP');
+-- 11.	Determine the id and the name of each customer whose name starts with the letter “S”.
+select cust_id, cust_name from customer where cust_name like 'S%';
+-- 12.	Display all the data in the products table.  Order the display by the product description.
+select * from product order by prod_desc;
+-- 13.	Display all the data in the products table.  Order the display by product type.  Within each product type, order the display by product id.
+select * from product order by prod_type, prod_id;
+-- 14.	Determine the number of customers whose balances are less than their credit limits.
+select count(*) from customer where cust_balance<cust_limit;
+-- 15.	Display the total of the balances of all customers who are represented by sales representative 237 and whose balances are less than their credit limits.
+select sum(cust_balance) from customer where rep_id='237' and cust_balance<cust_limit; 
+-- 16.	Display the id, the description, and the total value of each product whose number of items is greater than the average number of items for all products. You may want to use a subquery.
+select prod_id, prod_desc, prod_quantity * prod_price as TOTAL_VALUE from product where prod_quantity>(select avg(prod_quantity) from product);
+-- 17.	Display the balance of the customer whose balance is the smallest.
+select min(cust_balance) from customer; 
+-- 18.	Display the id, the name, and the balance of the customer with the largest balance. 
+select cust_id, cust_name, cust_balance from customer where cust_balance=(select max(cust_balance) from customer);
+-- 19.	Display the sales representative’s id and the sum of the balances of all customers represented by each of these sales representatives. Group and order the display by the sales representative ids.
+select rep_id, sum(cust_balance) as TOTAL_CUST_BALANCE from customer group by rep_id order by rep_id;
+-- 20.	Display the sales representative’s id and the sum of the balances of all customers represented by each of these sales representatives, but limit the result to those sales representatives whose sum is more than $12,000.
+select rep_id, sum(cust_balance) as TOTAL_CUST_BALANCE from customer group by rep_id having sum(cust_balance)>12000;
+-- 21.	Display the ids of all products whose description is not known.
+select prod_id from product where prod_desc='';
