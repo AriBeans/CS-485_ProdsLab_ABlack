@@ -44,31 +44,41 @@ SELECT cust_id, cust_name FROM customer
 WHERE cust_name LIKE 'S%';
 
 -- 12.	Display all the data in the products table.  Order the display by the product description.
-select * from product order by prod_desc;
+SELECT * FROM product 
+ORDER BY prod_desc;
 
 -- 13.	Display all the data in the products table.  Order the display by product type.  Within each product type, order the display by product id.
-select * from product order by prod_type, prod_id;
+SELECT * FROM product 
+ORDER BY prod_type, prod_id;
 
 -- 14.	Determine the number of customers whose balances are less than their credit limits.
-select count(*) from customer where cust_balance<cust_limit;
+SELECT COUNT(*) FROM customer 
+WHERE cust_balance<cust_limit;
 
 -- 15.	Display the total of the balances of all customers who are represented by sales representative 237 and whose balances are less than their credit limits.
-select sum(cust_balance) from customer where rep_id='237' and cust_balance<cust_limit; 
+SELECT SUM(cust_balance) FROM customer 
+WHERE rep_id='237' AND cust_balance<cust_limit; 
 
 -- 16.	Display the id, the description, and the total value of each product whose number of items is greater than the average number of items for all products. You may want to use a subquery.
-select prod_id, prod_desc, prod_quantity * prod_price as TOTAL_VALUE from product where prod_quantity>(select avg(prod_quantity) from product);
+SELECT prod_id, prod_desc, prod_quantity * prod_price AS TOTAL_VALUE FROM product 
+WHERE prod_quantity>(SELECT AVG(prod_quantity) FROM product);
 
 -- 17.	Display the balance of the customer whose balance is the smallest.
-select min(cust_balance) from customer; 
+SELECT MIN(cust_balance) FROM customer; 
 
 -- 18.	Display the id, the name, and the balance of the customer with the largest balance. 
-select cust_id, cust_name, cust_balance from customer where cust_balance=(select max(cust_balance) from customer);
+SELECT cust_id, cust_name, cust_balance FROM customer 
+WHERE cust_balance=(SELECT MAX(cust_balance) FROM customer);
 
 -- 19.	Display the sales representative’s id and the sum of the balances of all customers represented by each of these sales representatives. Group and order the display by the sales representative ids.
-select rep_id, sum(cust_balance) as TOTAL_CUST_BALANCE from customer group by rep_id order by rep_id;
+SELECT rep_id, SUM(cust_balance) AS TOTAL_CUST_BALANCE FROM customer 
+GROUP BY rep_id 
+ORDER BY rep_id;
 
 -- 20.	Display the sales representative’s id and the sum of the balances of all customers represented by each of these sales representatives, but limit the result to those sales representatives whose sum is more than $12,000.
-select rep_id, sum(cust_balance) as TOTAL_CUST_BALANCE from customer group by rep_id having sum(cust_balance)>12000;
+SELECT rep_id, SUM(cust_balance) AS TOTAL_CUST_BALANCE FROM customer 
+GROUP BY rep_id HAVING SUM(cust_balance)>12000;
 
 -- 21.	Display the ids of all products whose description is not known.
-select prod_id from product where prod_desc='';
+SELECT prod_id FROM product 
+WHERE prod_desc='';
