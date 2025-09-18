@@ -81,4 +81,4 @@ GROUP BY rep_id HAVING SUM(cust_balance)>12000;
 
 -- 21.	Display the ids of all products whose description is not known.
 SELECT prod_id FROM product 
-WHERE prod_desc='';
+WHERE prod_desc IS NULL;
