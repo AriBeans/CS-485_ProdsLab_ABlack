@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS rep;
 
 -- create the rep, customer, product, invoice, and line tables
 CREATE TABLE rep
-(rep_id		CHAR(3) PRIMARY KEY,
+(rep_id 	CHAR(3) PRIMARY KEY,
  rep_lname	VARCHAR(20),
  rep_fname	VARCHAR(15),
  rep_street	VARCHAR(20),
